@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IT TOP Колледж Уфа — Дайджест</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Golos+Text:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #1a1917;
+    --muted: #6b6860;
+    --faint: #e8e4dc;
+    --paper: #f5f2ec;
+    --white: #ffffff;
+    --accent: #7b3fa0;
+    --accent-soft: #f0e8f7;
+    --tag-bg: #eceae4;
+    --tag-text: #4a4740;
+  }
+  body { background: var(--paper); color: var(--ink); font-family: 'Golos Text', sans-serif; font-size: 16px; line-height: 1.65; }
+
+  /* HEADER */
+  .site-header {
+    background: var(--white);
+    border-bottom: 1px solid var(--faint);
+    padding: 2rem 2rem 1.75rem;
+  }
+  .header-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .logo-block {}
+  .logo-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.3rem;
+  }
+  .logo-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 4.5vw, 2.75rem);
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .logo-title span { color: var(--accent); }
+  .header-right {
+    text-align: right;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .header-right strong { display: block; font-size: 15px; color: var(--ink); font-weight: 500; }
+
+  /* FILTER */
+  .filter-wrap {
+    max-width: 860px;
+    margin: 1.75rem auto 0;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .filter-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-right: 4px; }
+  .f-btn {
+    background: none;
+    border: 1px solid var(--faint);
+    border-radius: 100px;
+    padding: 5px 16px;
+    font-size: 13px;
+    font-family: inherit;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .f-btn:hover, .f-btn.on { background: var(--ink); border-color: var(--ink); color: #fff; }
+
+  /* LIST */
+  main { max-width: 860px; margin: 2rem auto 5rem; padding: 0 2rem; }
+
+  /* CARD */
+  .card {
+    background: var(--white);
+    border: 1px solid var(--faint);
+    border-radius: 14px;
+    overflow: hidden;
+    margin-bottom: 10px;
+    transition: box-shadow .2s;
+  }
+  .card:hover { box-shadow: 0 4px 28px rgba(0,0,0,.07); }
+  .card-head {
+    display: flex;
+    gap: 1.25rem;
+    padding: 1.5rem;
+    cursor: pointer;
+    user-select: none;
+  }
+  .c-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.75rem;
+    font-weight: 400;
+    color: var(--faint);
+    line-height: 1;
+    flex-shrink: 0;
+    min-width: 2.5ch;
+    padding-top: 3px;
+  }
+  .c-meta { flex: 1; min-width: 0; }
+  .c-date { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin-bottom: .3rem; font-weight: 500; }
+  .c-title { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 600; line-height: 1.25; margin-bottom: .45rem; }
+  .c-desc { font-size: 14px; color: var(--muted); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.55; }
+  .c-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: .8rem; }
+  .tag { background: var(--tag-bg); color: var(--tag-text); font-size: 11px; padding: 3px 11px; border-radius: 100px; font-weight: 500; }
+  .c-arrow {
+    align-self: center; flex-shrink: 0;
+    width: 32px; height: 32px;
+    border: 1px solid var(--faint); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    background: none; cursor: pointer;
+    transition: all .2s; color: var(--muted);
+  }
+  .card.open .c-arrow { background: var(--accent); border-color: var(--accent); color: #fff; transform: rotate(180deg); }
+
+  /* BODY */
+  .card-body { display: none; }
+  .card.open .card-body { display: block; }
+  .card-body-inner { padding: 0 1.5rem 1.75rem; border-top: 1px solid var(--faint); margin: 0 1.5rem; padding-top: 1.5rem; }
+
+  /* SECTIONS */
+  .section { margin-bottom: 1.5rem; }
+  .section:last-child { margin-bottom: 0; }
+  .sec-label { font-size: 10px; text-transform: uppercase; letter-spacing: .13em; color: var(--accent); font-weight: 600; margin-bottom: .5rem; }
+  .sec-title { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 600; margin-bottom: .4rem; line-height: 1.3; }
+  .sec-text { font-size: 14px; color: var(--muted); line-height: 1.65; }
+  .sec-link { display: inline-flex; align-items: center; gap: 5px; font-size: 13px; color: var(--accent); text-decoration: none; font-weight: 500; margin-top: .5rem; }
+  .sec-link:hover { text-decoration: underline; }
+  .divider { height: 1px; background: var(--faint); margin: 1.25rem 0; }
+
+  /* GRID CARDS */
+  .mini-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: .85rem; margin-top: .75rem; }
+  .mini-card { background: var(--paper); border: 1px solid var(--faint); border-radius: 10px; padding: .9rem 1rem; }
+  .mini-card h4 { font-size: 13px; font-weight: 600; margin-bottom: .25rem; }
+  .mini-card p { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+  /* BDAY BLOCK */
+  .bday-box { background: var(--accent-soft); border-radius: 10px; padding: 1rem 1.25rem; }
+  .bday-box p { font-size: 14px; color: var(--ink); line-height: 1.75; }
+  .bday-box strong { color: var(--accent); }
+
+  /* PHOTO PLACEHOLDER */
+  .photo-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: .75rem; border-radius: 10px; overflow: hidden; }
+  .photo-strip img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; }
+
+  /* FOOTER */
+  footer { text-align: center; padding: 2rem; font-size: 12px; color: var(--muted); border-top: 1px solid var(--faint); max-width: 860px; margin: 0 auto; }
+  footer a { color: var(--accent); text-decoration: none; }
+
+  @media (max-width: 600px) {
+    .site-header { padding: 1.5rem 1rem; }
+    .filter-wrap, main { padding: 0 1rem; }
+    .card-head { padding: 1.25rem; gap: 1rem; }
+    .c-num { font-size: 2rem; }
+    .card-body-inner { margin: 0 1.25rem; }
+    .photo-strip { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo-block">
+      <div class="logo-eyebrow">Московский колледж цифровых технологий «Академия ТОП» Уфа</div>
+      <div class="logo-title">Дайджест<span>.</span></div>
+    </div>
+    <div class="header-right">
+      <strong>9 выпусков</strong>
+      Архив 2024–2026
+    </div>
+  </div>
+</header>
+
+<div class="filter-wrap">
+  <span class="filter-label">Год:</span>
+  <button class="f-btn on" data-yr="all">Все</button>
+  <button class="f-btn" data-yr="2026">2026</button>
+  <button class="f-btn" data-yr="2025">2025</button>
+  <button class="f-btn" data-yr="2024">2024</button>
+</div>
+
+<main>
+
+  <!-- 9 — АПР-МАЙ 2026 -->
+  <article class="card" data-yr="2026">
+    <div class="card-head" onclick="tog(this.parentElement)">
+      <div class="c-num">09</div>
+      <div class="c-meta">
+        <div class="c-date">Апрель — Май 2026</div>
+        <div class="c-title">Весна раскрылась в полной красе</div>
+        <div class="c-desc">ПРОФфест 2026, стажировка в LeVel Group, конкурс фирменного стиля для кофейни и именинники двух месяцев.</div>
+        <div class="c-tags"><span class="tag">Партнёрство</span><span class="tag">Мероприятия</span><span class="tag">Конкурсы</span></div>
+      </div>
+      <button class="c-arrow" aria-label="Раскрыть"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+    </div>
+    <div class="card-body"><div class="card-body-inner">
+
+      <div class="section">
+        <div class="sec-label">Мероприятие</div>
+        <div class="sec-title">IT TOP на Всероссийской ярмарке ПРОФфест 2026</div>
+        <div class="sec-text">17 апреля в Конгресс-холле «Торатау» администрация вместе со студентами-амбассадорами представила колледж: выставка студенческих работ, интерактивы, брендированные значки и пробное тестирование.</div>
+      </div>
+      <div class="divider"></div>
+      <div class="section">
+        <div class="sec-label">Партнёрство</div>
+        <div class="sec-title">Стажировка в LeVel Group</div>
+        <div class="sec-text">Подписано соглашение с IT-компанией LevelGroup — разработчиком CRM-систем в Республике Башкортостан. Студенты получают возможность применить знания в реальных проектах и сделать первые шаги в индустрии.</div>
+      </div>
+      <div class="divider"></div>
+      <div class="section">
+        <div class="sec-label">Конкурс</div>
+        <div class="sec-title">Фирменный стиль для кофейни «ЛевКофе»</div>
+        <div class="sec-text">Дизайнеры 1 курса разработали брендинг для сети кофеен. Лучшие работы оценил владелец «ЛевКофе» Нуртдинов Лев Маратович.</div>
+      </div>
+      <div class="divider"></div>
+      <div class="section">
+        <div class="sec-label">Перемены в перерывах</div>
+        <div class="sec-text">Прогулки на свежем воздухе и совместные занятия йогой с инструктором — студенческая жизнь не останавливается между парами.</div>
+      </div>
+      <div class="divider"></div>
+      <div class="section bday-box">
+        <div class="sec-label">🎉 Именинники апреля — мая</div>
+        <p>Зубков Матвей, Осипова Александра, Батурина Дарья, Столяров Игорь, Садыкова Лилия, Андерзянова Амелия, Гилязова Камилла, Гарипов Данэль, Симакина Вероника, Хайрзаманова Анита, Валеев Роберт, Дубенец Камилла, Никифорова Екатерина, Зиганьшина Аделина, Набиев Марсель, Мирсаитов Айнур, Теплов Евгений, Захаров Максим, Сафонова Софья.<br><strong>А также директор Семёнова Диляра Сергеевна и преподаватели Лобанов Данил и Ясин Эминович!</strong></p>
+      </div>
+
+    </div></div>
+  </article>
+
+  <!-- 8 — МАРТ 2026 -->
+  <article class="card" data-yr="2026">
+    <div class="card-head" onclick="tog(this.parentElement)">
+      <div class="c-num">08</div>
+      <div class="c-meta">
+        <div class="c-date">Март 2026</div>
+        <div class="c-title">Ловим весенний вайб</div>
+        <div class="c-desc">Лекции на свежем воздухе, ледоход на набережной, конференция CyberSecurity САБАНТУЙ 2026, экскурсия в телекомпанию «Вся Уфа» и Музей банка России.</div>
+        <div class="c-tags"><span class="tag">Кибербезопасность</span><span class="tag">Экскурсии</span><span class="tag">8 Марта</span></div>
+      </div>
+      <button class="c-arrow" aria-label="Раскрыть"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+    </div>
+    <div class="card-body"><div class="card-body-inner">
+
+      <div class="section">
+        <div class="sec-label">Конференция</div>
+        <div class="sec-title">CyberSecurity САБАНТУЙ 2026</div>
+        <div class="sec-text">13 марта студенты 2 курса направления «Кибербезопасность» посетили ежегодную конференцию — одно из главных событий в области защиты данных для экспертов Башкирии. Доклады, нетворкинг, новые знания.</div>
+        <a class="sec-link" href="https://codeib.ru/event/cybersecurity-sabantuy-ufa-2026-1010/page/vvedenie-cybersecurity-sabantuy-ufa-2026" target="_blank">Подробнее о конференции →</a>
+      </div>
+      <div class="divider"></div>
+      <div class="section">
+        <div class="sec-label">Экскурсия</div>
+        <div class="sec-title">Телекомпания «Вся Уфа»</div>
+        <div class="sec-text">Студенты-маркетологи 2 курса наблюдали прямой эфир с участием преподавателя Бычаева Максима Алексеевича, пообщались с ведущими и побывали в гримёрке.</div>
+      </div>
+      <div class="divider"></div>
+      <div class="section">
+        <div class="sec-label">Экскурсия</div>
+        <div class="sec-title">Музей банка России</div>
+        <div class="sec-text">Студенты 1 курса вместе с преподавателем Артёмом Сергеевичем побывали в банковском хранилище начала ХХ века: монеты Золотой Орды, дореволюционные сберкнижки, история банковской системы от Империи до наших дней.</div>
+      </div>
+      <div class="divider"></div>
+      <div class="section">
+        <div class="sec-label">Учёба и творчество</div>
+        <div class="sec-text">Рисование с натуры, просмотры работ, озвучивание мультфильмов — дизайнеры радовались студенческой жизни в полную силу.</div>
+      </div>
+      <div class="divider"></div>
+      <div class="section bday-box">
+        <div class="sec-label">🎉 Именинники марта</div>
+        <p>Добровольский Иван, Зиганурова Мадина, Фаткуллин Руслан, Адеев Арсен, Валеева Азалия, Каюмов Айдамир, Вахитова Диана, Ершов Станислав, Галиахметов Тамерлан, Галактионов Сергей, Дашижигмитова Дари, Моисеенко Кирилл, Яланузян Леон.<br><strong>Завуч Покровская Анна, преподаватели Габдуллина Алиса, Шарипов Роберт и Лютов Егор!</strong></p>
+      </div>
+
+    </div></div>
+  </article>
+
+  <!-- 7 — ЯНВ-ФЕВ 2026 -->
+  <article class="card" data-yr="2026">
+    <div class="card-head" onclick="tog(this.parentElement)">
+      <div class="c-num">07</div>
+      <div class="c-meta">
+        <div class="c-date">Январь — Февраль 2026</div>
+        <div class="c-title">Новый год, Масленница и День всех влюблённых</div>
+        <div class="c-desc">Ардуино-игры на C++, маски из папье-маше, валентинки, блины, Масленица, профориентация в школах и открытие набора на 2026–2027 год.</div>
+        <div class="c-tags"><span class="tag">Праздники</span><span class="tag">Программирование</span><span class="tag">Набор 2026</span></div>
+      </div>
+      <button class="c-arrow" aria-label="Раскрыть"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+    </div>
+    <div class="card-body"><div class="card-body-inner">
+
+      <div class="section">
+        <div class="sec-label">Проект</div>
+        <div class="sec-title">Игра на Ардуино — C++ в деле</div>
+        <div class="sec-text">Второкурсники-программисты собрали схему из 5 кнопок, экрана и микроконтроллера, написали игру с классами для обработки логики и сигналов. Живой проект — живые знания.</div>
+      </div>
+      <div class="divider"></div>
+      <div class="section">
+        <div class="sec-label">Творчество</div>
+        <div class="sec-title">Шоу Маски — папье-маше на проектной графике</div>
+        <div class="sec-text">Дизайнеры вместе с преподавателем создавали маски из папье-маше — настоящая арт-мастерская прямо в колледже.</div>
+      </div>
+      <div class="divider"></div>
+      <div class="section">
+        <div class="sec-label">Праздники</div>
+        <div class="sec-text">День всех влюблённых: все валентинки доставлены адресатам. Масленица: студентка группы 9/1-ГД-25/1 Дмитриева Кристина победила в конкурсе на самый креативный блинчик 🥞</div>
+      </div>
+      <div class="divider"></div>
+      <div class="section">
+        <div class="sec-label">Новости</div>
+        <div class="sec-title">Открыт набор на 2026–2027 учебный год!</div>
+        <div class="sec-text">Колледж «Академия ТОП» ведёт приёмную кампанию. За каждого приведённого друга, поступившего в ТОП, — специальный подарок от колледжа.</div>
+      </div>
+      <div class="divider"></div>
+      <div class="section bday-box">
+        <div class="sec-label">🎉 Именинники января — февраля</div>
+        <p><strong>Январь:</strong> Козлов Андрей, Бердигулова Эльза, Гизатуллин Тимур, Садриева Рената, Абдуллин Амир, Батыршин Эмиль, Каримов Даниэль, Овчинникова Ольга, Фаткуллин Руслан, Козловская Ангелина, Асадуллин Тамерлан, Хамидуллин Айнур, Тарасов Матвей, Лугинина Яна. Преподаватели Шагин Динислам и Галлямова Алсу.<br><strong>Февраль:</strong> Абкаримов Кирилл, Воронцов Дмитрий, Тагиров Ильнур, Жиляева Ариадна, Кадыргулова Карина, Нуреева Амалия, Ломоносов Лев, Сагитов Амир, Батракова Ульяна, Бикмеева Дилара, Абузаров Рустем, Чекалкин Алексей, Маннанова Василиса, Муслимов Алмаз, Сергеев Никита, Тиунова Дарья, Сафаргулова Алиса. Преподаватели Роман Мязин и Никита Смольников.</p>
+      </div>
+
+    </div></div>
+  </article>
+
+  <!-- 6 — ДЕКАБРЬ 2025 -->
+  <article class="card" data-yr="2025">
+    <div class="card-head" onclick="tog(this.parentElement)">
+      <div class="c-num">06</div>
+      <div class="c-meta">
+        <div class="c-date">Декабрь 2025</div>
+        <div class="c-title">Магия, сессия и Новогодний Бал</div>
+        <div class="c-desc">Мини-светильники своими руками, зачёты и экзамены, студийная фотосессия по «Цифровой фотографии», новогоднее оформление и волшебный бал в «Сердце замка».</div>
+        <div class="c-tags"><span class="tag">Сессия</span><span class="tag">Новый год</span><span class="tag">Бал</span></div>
+      </div>
+      <button class="c-arrow" aria-label="Раскрыть"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+    </div>
+    <div class="card-body"><div class="card-body-inner">
+
+      <div class="section">
+        <div class="sec-label">Творческий проект</div>
+        <div class="sec-title">Мини-светильники: провода, паяльник и капелька волшебства</div>
+        <div class="sec-text">Дизайнеры вместе с преподавателем Ариной Сергеевной собрали светильники своими руками — настоящий предновогодний мастер-класс по электронике.</div>
+      </div>
+      <div class="divider"></div>
+      <div class="section">
+        <div class="sec-label">Экзамен</div>
+        <div class="sec-title">Цифровая фотография — зачёт в студии</div>
+        <div class="sec-text">23 декабря студенты 2 курса «Графического дизайна» сдавали экзамен в фотостудии: режимы съёмки, работа со светом, обработка в графических редакторах. Комиссия оценивала технику и творческий подход.</div>
+        <a class="sec-link" href="https://nagimovaphoto.wfolio.pro/disk/novogodniy-bal-it-top-2025-rxdvrb" target="_blank">Фото с Новогоднего Бала →</a>
+      </div>
+      <div class="divider"></div>
+      <div class="section">
+        <div class="sec-label">Событие года</div>
+        <div class="sec-title">Новогодний Бал в «Сердце замка»</div>
+        <div class="sec-text">26 декабря студенты отметили завершение семестра на волшебном балу: мерцающие огни, нарядные образы, танцы и тёплое общение. Настоящая зимняя сказка после сессии.</div>
+      </div>
+      <div class="divider"></div>
+      <div class="section bday-box">
+        <div class="sec-label">🎉 Именинники декабря</div>
+        <p>Андриянова Александра, Алексеев Данила, Хазиев Альфред, Хасанов Роберт, Сокольников Борислав, Селезнёва Екатерина, Семёнов Эдгар, Язаров Вадим, Риянов Родион, Абдулаев Дамир, Зубков Андрей, Ежова Эльвина, Амбарян Арам, Шарипов Артур, Юлдашев Карим, Шевченко Валерия, Труш Софья, Шухтуева Диана.<br><strong>Преподаватель Батухтина Арина!</strong></p>
+      </div>
+
+    </div></div>
+  </article>
+
+  <!-- 5 — НОЯБРЬ 2025 -->
+  <article class="card" data-yr="2025">
+    <div class="card-head" onclick="tog(this.parentElement)">
+      <div class="c-num">05</div>
+      <div class="c-meta">
+        <div class="c-date">Ноябрь 2025</div>
+        <div class="c-title">Насыщенный ноябрь 🍁</div>
+        <div class="c-desc">Воркшоп с журналистом, экскурсия в ГНИВЦ, занятия ОБЗР с автоматом, лекция Роспотребнадзора и посещение анимационной студии Artwall.</div>
+        <div class="c-tags"><span class="tag">Экскурсии</span><span class="tag">Воркшопы</span><span class="tag">Кибербезопасность</span></div>
+      </div>
+      <button class="c-arrow" aria-label="Раскрыть"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+    </div>
+    <div class="card-body"><div class="card-body-inner">
+
+      <div class="section">
+        <div class="sec-label">Воркшоп</div>
+        <div class="sec-title">Тексты для соцсетей — журналист Диана Азизова</div>
+        <div class="sec-text">5 ноября маркетологи 2 курса работали в формате мастерской: практические задания, разбор кейсов, советы от практикующего журналиста.</div>
+      </div>
+      <div class="divider"></div>
+      <div class="section">
+        <div class="sec-label">Экскурсия</div>
+        <div class="sec-title">IT-компания ГНИВЦ</div>
+        <div class="sec-text">12 ноября программисты 2 курса познакомились с инфраструктурой компании, инструментами командной работы и системами безопасности. Ценные советы по карьере и контакты для стажировок.</div>
+      </div>
+      <div class="divider"></div>
+      <div class="section">
+        <div class="sec-label">Экскурсия</div>
+        <div class="sec-title">Анимационная студия Artwall</div>
+        <div class="sec-text">24 ноября дизайнеры 2 курса увидели полный цикл создания анимации: от сторибординга до финального композитинга. Лайфхаки от профессионалов и вдохновение для собственных проектов.</div>
+      </div>
+      <div class="divider"></div>
+      <div class="section bday-box">
+        <div class="sec-label">🎉 Именинники ноября</div>
+        <p>Дюсметов Амирхан, Ежова Елизавета, Байрамгулов Данил, Баева Фатима, Хрипунов Артём, Суслова Ксения, Гниятов Радик, Зайнашева Аделина, Чижков Илья, Масленникова Елена, Тимляев Рафаэль, Ахунбабаев Расулжон, Мухамадуллина Карина, Едих Христиан, Тимофеева Виктория, Уклеин Александра, Яковлев Егор, Омеров Тимофей, Мусина Карина, Якшибаев Аслан.<br><strong>Завуч Елизавета Александровна и преподаватели Абуталимова Карина, Курган Дмитрий, Жукова Юлия, Ситдиков Тимур!</strong></p>
+      </div>
+
+    </div></div>
+  </article>
+
+  <!-- 4 — ОКТЯБРЬ 2025 -->
+  <article class="card" data-yr="2025">
+    <div class="card-head" onclick="tog(this.parentElement)">
+      <div class="c-num">04</div>
+      <div class="c-meta">
+        <div class="c-date">Октябрь 2025</div>
+        <div class="c-title">Посвящение в студенты 2025 🎓</div>
+        <div class="c-desc">Первые зачёты, пересдачи, вручение студенческих билетов, торжественное посвящение, экскурсия в ГНИВЦ и Halloween «Тыквенный спас с IT TOP».</div>
+        <div class="c-tags"><span class="tag">Посвящение</span><span class="tag">Halloween</span><span class="tag">ГНИВЦ</span></div>
+      </div>
+      <button class="c-arrow" aria-label="Раскрыть"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+    </div>
+    <div class="card-body"><div class="card-body-inner">
+
+      <div class="section">
+        <div class="sec-label">Главное событие</div>
+        <div class="sec-title">Посвящение в студенты ММКЦТ «Академия ТОП»</div>
+        <div class="sec-text">Торжественная церемония в тёплой дружественной атмосфере. Администрация, преподаватели и старшекурсники поздравили первокурсников с официальным студенческим статусом.</div>
+        <a class="sec-link" href="https://drive.google.com/drive/folders/1bXyaBOXyWJCmTcxlD282js4CdUQFpCRn?usp=drive_link" target="_blank">Фотоархив посвящения →</a>
+      </div>
+      <div class="divider"></div>
+      <div class="section">
+        <div class="sec-label">Экскурсия</div>
+        <div class="sec-title">ГНИВЦ: студенты-тестировщики</div>
+        <div class="sec-text">29 октября программисты 2 курса стали тестировщиками — нашли ошибки на специально созданном сайте компании. Лучшие получили памятные призы.</div>
+      </div>
+      <div class="divider"></div>
+      <div class="section">
+        <div class="sec-label">Halloween</div>
+        <div class="sec-title">Тыквенный спас с IT TOP 🎃</div>
+        <div class="sec-text">31 октября колледж наполнили феи, ведьмы и вампиры. Победитель конкурса костюмов — Шарипова Азалия (ГД-1), вдохновлённая образом Санта Муэрте. Победитель декора аудитории — группа 9/1-ГД-25/1. Завершил день совместный просмотр «Дома монстров».</div>
+      </div>
+      <div class="divider"></div>
+      <div class="section bday-box">
+        <div class="sec-label">🎉 Именинники октября</div>
+        <p>Баранова Нина, Перегуда Дарья, Серов Павел, Садретдинова Аделина, Бикбулатов Амир, Мухаметшин Малик, Фалина Дарья, Максютов Богдан, Денисова Анна, Щепотьев Роман, Афанасьева Анастасия, Булатова Диана.<br><strong>Преподаватель по программированию Иванов Сергей Сергеевич!</strong></p>
+      </div>
+
+    </div></div>
+  </article>
+
+  <!-- 3 — СЕНТЯБРЬ 2025 -->
+  <article class="card" data-yr="2025">
+    <div class="card-head" onclick="tog(this.parentElement)">
+      <div class="c-num">03</div>
+      <div class="c-meta">
+        <div class="c-date">Сентябрь 2025</div>
+        <div class="c-title">Добро пожаловать, 2025–2026!</div>
+        <div class="c-desc">День знаний с квизами и играми, первые пары у программистов и дизайнеров, и старт нашего ежемесячного дайджеста.</div>
+        <div class="c-tags"><span class="tag">День знаний</span><span class="tag">Первый выпуск</span><span class="tag">Учёба</span></div>
+      </div>
+      <button class="c-arrow" aria-label="Раскрыть"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+    </div>
+    <div class="card-body"><div class="card-body-inner">
+
+      <div class="section">
+        <div class="sec-label">День знаний</div>
+        <div class="sec-title">1 сентября — нестандартно</div>
+        <div class="sec-text">После торжественной линейки — знакомство через игры и квизы от ведущего. Самым активным вручили памятные призы. Тёплая дружеская атмосфера с первого дня.</div>
+        <a class="sec-link" href="https://drive.google.com/drive/folders/1vy0LRUqxCzAm46LdUVWzVebjxWSqpUIA" target="_blank">Фото с 1 сентября 2025 →</a>
+      </div>
+      <div class="divider"></div>
+      <div class="section">
+        <div class="sec-label">Учёба</div>
+        <div class="sec-text">Программисты вникают в языки программирования. Дизайнеры осваивают основы композиции. Колледж ТОП — одна большая дружная семья.</div>
+      </div>
+      <div class="divider"></div>
+      <div class="section bday-box">
+        <div class="sec-label">🎉 Именинники сентября</div>
+        <p>Ситников Владимир, Фролов Тимофей, Хазиахметов Тагир, Галлямов Тимур, Смоляков Егор, Булаев Глеб, Пономарёв Никита, Баязитова Камилла, Инякина Виктория, Малмыгина Василиса, Камалетдинова Карина, Бурибаева Ева, Мамыкин Дмитрий, Ишбердин Айнур, Шабров Егор, Яхин Тимофей.<br><strong>Преподаватели Дрёмина Любовь Алексеевна и Каюмова Лайлохон Акрамчоновна!</strong></p>
+      </div>
+
+    </div></div>
+  </article>
+
+  <!-- 2 — МАЙ-ИЮНЬ 2025 -->
+  <article class="card" data-yr="2025">
+    <div class="card-head" onclick="tog(this.parentElement)">
+      <div class="c-num">02</div>
+      <div class="c-meta">
+        <div class="c-date">Май — Июнь 2025</div>
+        <div class="c-title">Сессия, Айгир и конец учебного года</div>
+        <div class="c-desc">Литературные дебаты, поход на Айгирские скалы, велопробег «1000 велосипедистов», ярмарка ПРОФфест и тёплый пикник в последний учебный день.</div>
+        <div class="c-tags"><span class="tag">Поход</span><span class="tag">Итоги года</span><span class="tag">ПРОФфест</span></div>
+      </div>
+      <button class="c-arrow" aria-label="Раскрыть"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+    </div>
+    <div class="card-body"><div class="card-body-inner">
+
+      <div class="section">
+        <div class="sec-label">Поход</div>
+        <div class="sec-title">Айгирские скалы — покорили вершину!</div>
+        <div class="sec-text">5 и 11 июня студенты и преподаватели отправились на Айгир. Дождь, туман, яркое солнце, флаг колледжа на Орлиных скалах и горячий чай в приюте. Уставшие, но счастливые.</div>
+      </div>
+      <div class="divider"></div>
+      <div class="section">
+        <div class="sec-label">Событие</div>
+        <div class="sec-title">Велопробег «1000 велосипедистов»</div>
+        <div class="sec-text">1 июня студенты и преподаватели IT TOP приняли участие во всероссийском велопробеге. На финише их ждали коллеги с робопсом колледжа.</div>
+      </div>
+      <div class="divider"></div>
+      <div class="section">
+        <div class="sec-label">Сессия</div>
+        <div class="sec-title">Литературные дебаты вместо экзамена</div>
+        <div class="sec-text">Студенты защищали свои позиции по правилам дебатов — каждый отличился, победителей определить было невозможно.</div>
+      </div>
+      <div class="divider"></div>
+      <div class="section">
+        <div class="sec-label">Последний день</div>
+        <div class="sec-text">30 июня 2025 — пикник на свежем воздухе: настольные игры, переводные татуировки, смех и общение. Учебный год 2024–2025 завершён!</div>
+      </div>
+      <div class="divider"></div>
+      <div class="section bday-box">
+        <div class="sec-label">🎉 Именинники мая — июня</div>
+        <p><strong>Май:</strong> Хасаншин Роберт, Галимова Карина, Горяйнов Вадим, Едренкин Арсений, Костюкевич Матвей, Мешкова Александра, Суслопарова Анна, Шубин Никита, Ахметов Ильгам, Лобач Макар, Андреев Ярослав, Байрамгулов Тимур.<br><strong>Июнь:</strong> Тимофеев Даниил, Байрамов Степан, Валиахметов Линар, Антипин Леонид, Гембель Егор, Самойлова Алина, Нагуманов Аскар, Нургалиев Роман, Масленников Дмитрий и ещё 16 именинников!</p>
+      </div>
+
+    </div></div>
+  </article>
+
+  <!-- 1 — ДЕК 2024 - ЯНВ 2025 -->
+  <article class="card" data-yr="2024">
+    <div class="card-head" onclick="tog(this.parentElement)">
+      <div class="c-num">01</div>
+      <div class="c-meta">
+        <div class="c-date">Декабрь 2024 — Январь 2025</div>
+        <div class="c-title">Зимняя сессия и Новый год</div>
+        <div class="c-desc">Первая зимняя сессия: экзамены программистов и просмотры дизайнеров. Студийная фотосессия по «Цифровой фотографии», украшение кабинетов и встреча 2025 года.</div>
+        <div class="c-tags"><span class="tag">Сессия</span><span class="tag">Новый год</span><span class="tag">Дизайн</span></div>
+      </div>
+      <button class="c-arrow" aria-label="Раскрыть"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+    </div>
+    <div class="card-body"><div class="card-body-inner">
+
+      <div class="section">
+        <div class="sec-label">Сессия</div>
+        <div class="sec-title">Программисты и дизайнеры сдают на отлично</div>
+        <div class="sec-text">Зимняя сессия — первое серьёзное испытание для первокурсников. Экзамены по строгим критериям, просмотры проектов, высокие оценки. Многие закрыли сессию «на автомате».</div>
+      </div>
+      <div class="divider"></div>
+      <div class="section">
+        <div class="sec-label">Студийная фотосессия</div>
+        <div class="sec-title">Цифровая фотография — итоговый проект</div>
+        <div class="sec-text">Второкурсники-дизайнеры завершили курс профессиональной студийной фотосессией. Фотографировала Нагимова.</div>
+        <a class="sec-link" href="https://nagimovaphoto.wfolio.pro/disk/studiynye-gd-n2grjd" target="_blank">Фото студийной сессии →</a>
+      </div>
+      <div class="divider"></div>
+      <div class="section">
+        <div class="sec-label">Новый год</div>
+        <div class="sec-text">Студенты украсили аудитории, дизайнеры оформляли колледж к праздникам. С Новым 2025 годом!</div>
+      </div>
+
+    </div></div>
+  </article>
+
+</main>
+
+<footer>
+  <p>IT TOP Колледж Уфа · Ул. Октябрьской Революции 78, 3 этаж</p>
+  <p style="margin-top:6px">
+    <a href="https://vk.com/it_top_college_ufa" target="_blank">ВКонтакте</a> ·
+    <a href="https://topitcollege.ru/ufa" target="_blank">topitcollege.ru</a> ·
+    <a href="https://wa.me/79959438649" target="_blank">WhatsApp</a> ·
+    +7 (937) 360-15-37
+  </p>
+</footer>
+
+<script>
+  function tog(card) { card.classList.toggle('open'); }
+  document.querySelectorAll('.f-btn').forEach(b => {
+    b.addEventListener('click', () => {
+      document.querySelectorAll('.f-btn').forEach(x => x.classList.remove('on'));
+      b.classList.add('on');
+      const yr = b.dataset.yr;
+      document.querySelectorAll('.card').forEach(c => {
+        c.style.display = (yr === 'all' || c.dataset.yr === yr) ? '' : 'none';
+      });
+    });
+  });
+</script>
+</body>
+</html>
