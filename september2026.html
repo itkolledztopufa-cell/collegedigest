@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Дайджест · Сентябрь 2026 · IT TOP Уфа</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Golos+Text:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0f0a1e;color:#fff;font-family:'Golos Text',sans-serif;overflow-x:hidden}
+.hero{min-height:100vh;background:linear-gradient(135deg,#1a0533 0%,#1e1b4b 40%,#0c2461 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:3rem 2.5rem;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 70% 30%,rgba(99,102,241,.35) 0%,transparent 70%),radial-gradient(ellipse 50% 50% at 20% 80%,rgba(139,92,246,.3) 0%,transparent 60%);pointer-events:none}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:100px;padding:6px 16px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:1.5rem;width:fit-content}
+.hero-tag::before{content:'';width:6px;height:6px;border-radius:50%;background:#a78bfa;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}
+.hero-title{font-family:'Unbounded',sans-serif;font-size:clamp(2.8rem,9vw,7rem);font-weight:900;line-height:.95;letter-spacing:-.03em;margin-bottom:1.5rem}
+.hero-title .line2{background:linear-gradient(90deg,#a78bfa,#60a5fa,#38bdf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-desc{font-size:16px;color:rgba(255,255,255,.6);line-height:1.65;max-width:480px;margin-bottom:2.5rem}
+.hero-stats{display:flex;gap:2rem;flex-wrap:wrap}
+.hero-stat strong{display:block;font-family:'Unbounded',sans-serif;font-size:1.75rem;font-weight:700;background:linear-gradient(90deg,#a78bfa,#60a5fa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-stat span{font-size:12px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.08em}
+.scroll-hint{position:absolute;bottom:2rem;right:2.5rem;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.3)}
+.scroll-hint::after{content:'';width:1px;height:40px;background:linear-gradient(to bottom,rgba(255,255,255,.3),transparent)}
+.section{padding:5rem 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.si{max-width:900px;margin:0 auto;padding:0 2rem}
+.sec-kicker{display:inline-flex;align-items:center;gap:8px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;margin-bottom:1.25rem;padding:5px 14px;border-radius:100px}
+.kp{background:rgba(167,139,250,.15);color:#a78bfa}
+.kb{background:rgba(96,165,250,.15);color:#60a5fa}
+.kc{background:rgba(34,211,238,.15);color:#22d3ee}
+.kg{background:rgba(52,211,153,.15);color:#34d399}
+.sec-title{font-family:'Unbounded',sans-serif;font-size:clamp(1.6rem,4vw,2.8rem);font-weight:700;line-height:1.1;letter-spacing:-.02em;margin-bottom:1.25rem}
+.sec-text{font-size:15px;color:rgba(255,255,255,.6);line-height:1.8;max-width:600px;margin-bottom:1rem}
+.mosaic{display:grid;gap:4px;margin:2.5rem 0;border-radius:20px;overflow:hidden}
+.m-cell{position:relative;overflow:hidden;background:rgba(255,255,255,.05)}
+.m-cell img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.m-cell:hover img{transform:scale(1.04)}
+.m-cell.tall{grid-row:span 2}
+.m-cell:not(.tall){aspect-ratio:4/3}
+.hl{background:linear-gradient(135deg,rgba(139,92,246,.15),rgba(79,70,229,.1));border:1px solid rgba(167,139,250,.2);border-radius:16px;padding:1.5rem 1.75rem;margin:2rem 0;font-size:15px;color:rgba(255,255,255,.8);line-height:1.75;position:relative}
+.hl::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(to bottom,#a78bfa,#60a5fa);border-radius:3px 0 0 3px}
+.hl strong{color:#a78bfa}
+.winners{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:2rem 0}
+.winner{background:linear-gradient(135deg,rgba(255,255,255,.06),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:1.5rem 1rem;text-align:center;transition:transform .2s}
+.winner:hover{transform:translateY(-3px)}
+.winner.first{background:linear-gradient(135deg,rgba(245,158,11,.15),rgba(251,191,36,.05));border-color:rgba(245,158,11,.3)}
+.winner-emoji{font-size:2.5rem;display:block;margin-bottom:.75rem}
+.winner-name{font-size:14px;font-weight:600;color:#fff;margin-bottom:.3rem}
+.winner-group{font-size:12px;color:rgba(255,255,255,.35)}
+.gd{height:1px;background:linear-gradient(90deg,transparent,rgba(167,139,250,.4),rgba(96,165,250,.4),transparent)}
+.footer{padding:3rem 2rem;text-align:center}
+.footer-logo{font-family:'Unbounded',sans-serif;font-size:1.2rem;font-weight:700;background:linear-gradient(90deg,#a78bfa,#60a5fa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:1rem}
+.footer-links{display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;margin-bottom:1rem}
+.footer-links a{font-size:13px;color:rgba(255,255,255,.4);text-decoration:none}
+.footer-links a:hover{color:#a78bfa}
+.footer-copy{font-size:12px;color:rgba(255,255,255,.2)}
+@media(max-width:600px){
+.hero{padding:2rem 1.25rem}.si{padding:0 1.25rem}
+.winners{grid-template-columns:1fr}.section{padding:3rem 0}
+}
+</style>
+</head>
+<body>
+
+<section class="hero">
+<div class="hero-bg"></div>
+<div class="hero-tag">Ежемесячный дайджест</div>
+<div class="hero-title">
+<div>Сентябрь</div>
+<div class="line2">2026</div>
+</div>
+<div class="hero-desc">Выпускники получили дипломы. Первокурсники переступили порог. В коридорах загремели робобои. Месяц, который запомнится надолго.</div>
+<div class="hero-stats">
+<div class="hero-stat"><strong>🎓</strong><span>Выпуск 2026</span></div>
+<div class="hero-stat"><strong>🔔</strong><span>1 сентября</span></div>
+<div class="hero-stat"><strong>🤖</strong><span>Робобои</span></div>
+</div>
+<div class="scroll-hint">Скролл</div>
+</section>
+<div class="gd"></div>
+
+<section class="section">
+<div class="si">
+<div class="sec-kicker kp">🎓 Выпуск 2026</div>
+<div class="sec-title">Они сделали это.</div>
+<div class="sec-text">В июле состоялась торжественная церемония вручения дипломов. Ребята прошли весь путь — от первых строк кода до дипломных проектов — и вышли настоящими специалистами.</div>
+<div class="mosaic" style="grid-template-columns:2fr 1fr;grid-template-rows:1fr 1fr">
+<div class="m-cell tall"><img src="grad1.jpg" alt="Выпускники"></div>
+<div class="m-cell"><img src="grad3.jpg" alt="Церемония"></div>
+<div class="m-cell"><img src="grad2.jpg" alt="На ступенях"></div>
+</div>
+<div class="hl"><strong>Поздравляем выпускников 2026!</strong> Впереди — карьера, реальные проекты и большие свершения. Вы навсегда останетесь частью семьи IT TOP. 💜</div>
+</div>
+</section>
+<div class="gd"></div>
+
+<section class="section">
+<div class="si">
+<div class="sec-kicker kb">🔔 День знаний</div>
+<div class="sec-title">Добро пожаловать,<br>первокурсники!</div>
+<div class="sec-text">1 сентября колледж наполнился новыми лицами. Торжественная линейка, игры и квизы. Самым активным — памятные призы.</div>
+<div class="mosaic" style="grid-template-columns:1fr 1fr;grid-template-rows:auto auto">
+<div class="m-cell" style="grid-column:span 2;aspect-ratio:16/7"><img src="sep1.jpg" alt="Общее фото"></div>
+<div class="m-cell"><img src="sep2.jpg" alt="Первокурсники"></div>
+<div class="m-cell"><img src="sep3.jpg" alt="На сцене"></div>
+</div>
+<div class="hl">Колледж ТОП — это место, где программисты, дизайнеры и специалисты по кибербезопасности становятся одной семьёй. <strong>Добро пожаловать домой!</strong> 🚀</div>
+</div>
+</section>
+<div class="gd"></div>
+
+<section class="section">
+<div class="si">
+<div class="sec-kicker kc">🤖 Робобои</div>
+<div class="sec-title">Пусть победит<br>сильнейший!</div>
+<div class="sec-text">В сентябре прошли робобои — ребята собирали роботов, программировали их и сталкивали в честной битве на ринге из скотча.</div>
+<div class="mosaic" style="grid-template-columns:1fr 1fr 1fr;grid-template-rows:auto auto">
+<div class="m-cell" style="grid-column:span 3;aspect-ratio:16/7"><img src="rob1.jpg" alt="Бой роботов"></div>
+<div class="m-cell"><img src="rob4.jpg" alt="Программирование"></div>
+<div class="m-cell"><img src="rob3.jpg" alt="Сборка"></div>
+<div class="m-cell"><img src="rob2.jpg" alt="Команды"></div>
+</div>
+<div class="winners">
+<div class="winner first"><span class="winner-emoji">🥇</span><div class="winner-name">Имя победителя</div><div class="winner-group">Группа</div></div>
+<div class="winner"><span class="winner-emoji">🥈</span><div class="winner-name">Имя победителя</div><div class="winner-group">Группа</div></div>
+<div class="winner"><span class="winner-emoji">🥉</span><div class="winner-name">Имя победителя</div><div class="winner-group">Группа</div></div>
+</div>
+</div>
+</section>
+<div class="gd"></div>
+
+<section class="section">
+<div class="si">
+<div class="sec-kicker kg">📸 Жизнь колледжа</div>
+<div class="sec-title">Сентябрь в кадре</div>
+<div class="sec-text">Учёба, творчество, общение — каждый день в IT TOP что-то происходит.</div>
+<div class="mosaic" style="grid-template-columns:1fr 1fr">
+<div class="m-cell"><img src="life1.jpg" alt="Дизайнеры"></div>
+<div class="m-cell" style="display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;color:rgba(255,255,255,.2);font-size:12px">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+<span>Добавьте фото</span>
+</div>
+</div>
+</div>
+</section>
+
+<footer class="footer">
+<div class="footer-logo">IT TOP · Уфа</div>
+<div class="footer-links">
+<a href="https://vk.com/it_top_college_ufa">ВКонтакте</a>
+<a href="https://topitcollege.ru/ufa">topitcollege.ru</a>
+<a href="https://wa.me/79959438649">WhatsApp</a>
+</div>
+<div class="footer-copy">Ул. Октябрьской Революции 78, 3 этаж · Академия ТОП Уфа</div>
+</footer>
+</body>
+</html>
